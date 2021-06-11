@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+    <header>
+        <div class="logo">E-shop</div>
+        <div class="cart">
+            <form action="#" class="search-form" @submit.prevent="">
+                <input type="text" v-model="userSearch" class="search-field" >
+                <button class="btn-search" type="submit" @click="showProduct">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+            <button class="btn-cart" type="button" @click="showBasket">Корзина</button>
+            <div class="cart-block" v-if="show">
+                <div class="cart-wrapper">
+                    <ul v-if="cartProducts.length" class="cart-product">
+                        <li class="cart-item" v-for="(prod, index) in cartProducts" :key="index">
+                            <div class="cart-img"><img :src="imgCatalog" alt="Some img"></div>
+                            <div class="cart-name">
+                                <p class="label">Название:</p>
+                                <div class="cart-name-elem">{{ prod.product_name }}</div>
+                            </div>
+                            <div class="cart-price">
+                                <p class="label">Цена:</p>
+                                <div class="cart-price-elem">{{ prod.price }}</div>
+                            </div>
+                            <div class="cart-quantity">
+                                <p class="label">Количество:</p>
+                                <div class="cart-quantity-elem">
+                                    <div 
+                                    class="cart-quantity-control"  v-bind:data-index="index" 
+                                    @click="controlQuantity(index, 'minus')"
+                                    >-</div>
+                                    <div class="cart-quantity-total">{{ prod.quantity }}</div>
+                                    <div 
+                                    class="cart-quantity-control"  v-bind:data-index="index"
+                                    @click="controlQuantity(index, 'plus')"
+                                    >+</div>
+                                </div>
+                            </div>
+                            <div class="cart-delete">
+                                <button v-bind:data-index="index" class="cart-delete-button" @click="deleteProduct(index)">Удалить</button>
+                            </div>
+                            
+                        </li>
+                    </ul>
+                    <div class="cart-empty" v-else>
+                        <div class="cart-empty-text">Товаров в корзине нет...</div>
+                        <img src="img/shopping-cart.png" alt="Корзина"  class="cart-empty-img">
+                    </div>
+                    <div class="cart-total" v-if="cartProducts.length">
+                        <div class="cart-total-text">Итого:</div>
+                        <div class="cart-total-price">{{ cartTotalPrice }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="products">
+            <div class="product-item" v-if="product.show" v-for="product of products" :key="product.id_product">
+                <img :src="imgCatalog" alt="Some img">
+                <div class="desc">
+                    <h3>{{product.product_name}}</h3>
+                    <p>{{product.price}} $</p>
+                    <button class="buy-btn" @click="addProduct(product)">Купить</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
+<!--<div class="cart-item" data-id="${this.id_product}">-->
+    <!--<div class="product-bio">-->
+        <!--<img src="${this.img}" alt="Some image">-->
+        <!--<div class="product-desc">-->
+            <!--<p class="product-title">${this.product_name}</p>-->
+            <!--<p class="product-quantity">Quantity: ${this.quantity}</p>-->
+            <!--<p class="product-single-price">$${this.price} each</p>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="right-block">-->
+        <!--<p class="product-price">${this.quantity*this.price}</p>-->
+        <!--<button class="del-btn" data-id="${this.id_product}">&times;</button>-->
+    <!--</div>-->
+<!--</div>-->
